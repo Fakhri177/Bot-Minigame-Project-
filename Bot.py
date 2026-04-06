@@ -14,9 +14,9 @@ async def help_me(ctx):
         "1. `!help_me` - Menampilkan pesan bantuan ini\n"
         "2. `!suit <pilihan>` - Main suit (batu, kertas, gunting)\n"
         "3. `!tebak <angka>` - Main tebak angka (1-100)\n"
-        "4"
+        "4. `!tebak_kata <kata>` - Main tebak kata (python, discord, bot, programming, game)"
     )
-    
+    await ctx.send(help_message)
 #Suit
 @bot.command()
 async def suit(ctx, pilihan):
@@ -53,4 +53,17 @@ async def tebak(ctx, angka: int):
         await ctx.send("🎉 Selamat! Kamu menebak angka yang benar.")
         number = random.randint(1, 100)  # Reset angka untuk permainan berikutnya
 
-bot.run("TOken")
+#tebak kata
+@bot.command()
+async def tebak_kata(ctx, *, kata):
+    kata = kata.lower()
+    words = ["python", "discord", "bot", "programming", "game"]
+    bot_word = random.choice(words)
+
+    if kata == bot_word:
+        await ctx.send("🎉 Selamat! Kamu menebak kata yang benar.")
+    else:
+        await ctx.send(f"❌ Salah! Kata yang benar adalah: {bot_word}")
+        bot_word = random.choice(words)  # Reset kata untuk permainan berikutnya
+
+bot.run("Tokenmmu")
