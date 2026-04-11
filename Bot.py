@@ -14,7 +14,8 @@ async def help_me(ctx):
         "1. `!help_me` - Menampilkan pesan bantuan ini\n"
         "2. `!suit <pilihan>` - Main suit (batu, kertas, gunting)\n"
         "3. `!tebak <angka>` - Main tebak angka (1-100)\n"
-        "4. `!tebak_kata <kata>` - Main tebak kata (python, discord, bot, programming, game)"
+        "4. `!tebak_kata <kata>` - Main tebak kata (python, discord, bot, programming, game)\n"
+        "5. `!math` - Main soal matematika sederhana"
     )
     await ctx.send(help_message)
 #Suit
@@ -65,5 +66,33 @@ async def tebak_kata(ctx, *, kata):
     else:
         await ctx.send(f"❌ Salah! Kata yang benar adalah: {bot_word}")
         bot_word = random.choice(words)  # Reset kata untuk permainan berikutnya
+
+@bot.command ()
+async def math(ctx):
+    m1 = random.randint(1, 11)
+    m2 = random.randint(1, 11)
+    op = random.choice(["+", "-", "*", ])
+
+    if op == "+":
+        result = m1 + m2
+    elif op == "-":
+        result = m1 - m2
+    elif op == "*":
+        result = m1 * m2
+
+    await ctx.send(f"Berapa hasil dari: {m1} {op} {m2}?")
+
+    def check(m):
+        return m.author == ctx.author and m.channel == ctx.channel
+    
+    msg = await bot.wait_for("message", check=check)
+    jawab = msg.content
+
+    if int(jawab) == result:
+        await ctx.send("🎉 Benar!")
+    
+
+    else:
+        await ctx.send(f"❌ Salah! Hasil yang benar adalah: {result}")
 
 bot.run("Tokenmmu")
